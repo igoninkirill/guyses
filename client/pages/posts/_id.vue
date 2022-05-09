@@ -13,6 +13,16 @@
           </v-alert>
         </v-list-item-content>
       </v-col>
+      <v-col cols="12" md="auto" sm="12">
+        <v-btn
+          style="width: 100%"
+          color="gray"
+          nuxt
+          to="/"
+        >
+          Посмотреть участников
+        </v-btn>
+      </v-col>
     </v-card-title>
     <v-card-text>
       <v-row>
@@ -36,16 +46,6 @@
     <v-card-actions>
       <v-row>
         <v-spacer />
-        <v-col cols="12" md="auto" sm="12">
-          <v-btn
-            style="width: 100%"
-            color="gray"
-            nuxt
-            to="/"
-          >
-            Посмотреть участников
-          </v-btn>
-        </v-col>
         <v-col cols="12" md="auto" sm="12">
           <v-btn
             style="width: 100%"
