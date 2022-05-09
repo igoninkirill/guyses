@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        return response()->json(PostResource::collection(Post::latest('id')->get()));
+        return response()->json(PostResource::collection(Post::latest('id')->with(['comments'])->get()));
     }
 
     public function store(PostRequest $request)

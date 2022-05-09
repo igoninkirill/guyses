@@ -1,7 +1,18 @@
 <template>
   <v-card>
     <v-card-title>
-      Комментарии к <v-chip color="primary" class="ml-1">{{ name }}</v-chip>
+      Комментарии к <v-chip color="primary" class="ml-1">{{ post.name }}</v-chip>
+      <v-col cols="12">
+        <v-list-item-content>
+          <v-list-item-title>Описание</v-list-item-title>
+          <v-alert
+            color="primary"
+            dark
+          >
+            <v-list-item-subtitle>{{ post.description }}</v-list-item-subtitle>
+          </v-alert>
+        </v-list-item-content>
+      </v-col>
     </v-card-title>
     <v-card-text>
       <v-row>
@@ -23,27 +34,32 @@
       </v-row>
     </v-card-text>
     <v-card-actions>
-      <v-spacer />
-      <v-btn
-        color="primary"
-        nuxt
-        to="/"
-      >
-        Посмотреть участников
-      </v-btn>
-      <v-btn
-        color="primary"
-        @click="store"
-      >
-        Отправить
-      </v-btn>
+      <v-row>
+        <v-spacer />
+        <v-col cols="12" md="auto" sm="12">
+          <v-btn
+            style="width: 100%"
+            color="gray"
+            nuxt
+            to="/"
+          >
+            Посмотреть участников
+          </v-btn>
+        </v-col>
+        <v-col cols="12" md="auto" sm="12">
+          <v-btn
+            style="width: 100%"
+            color="primary"
+            @click="store"
+            :loading="load"
+          >
+            Отправить
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-card-actions>
     <v-card-text>
       <h2>Комментарии</h2>
-<!--      <v-row v-for="comment in comments">-->
-<!--        <v-col cols="12">{{ comment.name }}</v-col>-->
-<!--        <v-col cols="12">{{ comment.comment }}</v-col>-->
-<!--      </v-row>-->
       <v-list three-line>
         <template v-for="comment in comments">
           <v-list-item
@@ -68,7 +84,7 @@ export default {
   name: 'Comments',
 
   data: () => ({
-    name: '',
+    post: '',
     form: ({
       post_id: '',
       name: '',
@@ -78,7 +94,8 @@ export default {
       name: '',
       comment: ''
     }),
-    comments: []
+    comments: [],
+    load: false
   }),
 
   created() {
@@ -89,14 +106,14 @@ export default {
   methods: {
     init () {
       axios
-        .get("/api/posts/" + this.$route.params.id, {
+        .get("http://rucensus.loc/api/posts/" + this.$route.params.id, {
           headers: {
             Accept: "application/json"
           }
         })
         .then(
           response => {
-            this.name = response.data.post.name
+            this.post = response.data.post
             this.comments = response.data.comments
           },
         )
@@ -104,20 +121,25 @@ export default {
       ;
     },
     store () {
+      this.load = true
       axios
-        .post("/api/comments", this.form, {
+        .post("http://rucensus.loc/api/comments", this.form, {
           headers: {
             Accept: "application/json"
           }
         })
         .then(
           response => {
+            this.load = false
             this.init()
             this.form.name = ''
             this.form.comment = ''
           },
         )
-        .catch(error => this.errors = error.response.data.errors)
+        .catch(error => {
+          this.load = false
+          this.errors = error.response.data.errors
+        })
       ;
     }
   }

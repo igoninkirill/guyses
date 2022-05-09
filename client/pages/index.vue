@@ -35,6 +35,7 @@
           >
             Комментарии
           </v-btn>
+          <v-chip>{{ item.comments.length }}</v-chip>
         </template>
       </v-data-table>
     </v-card>
@@ -64,7 +65,7 @@ export default {
   methods: {
     init () {
       axios
-        .get("/api/posts", this.form, {
+        .get("http://rucensus.loc/api/posts", this.form, {
           headers: {
             Accept: "application/json"
           }

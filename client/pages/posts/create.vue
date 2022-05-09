@@ -44,20 +44,29 @@
           </v-row>
         </v-card-text>
         <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/"
-          >
-            Посмотреть участников
-          </v-btn>
-          <v-btn
-            color="primary"
-            @click="store"
-          >
-            Отправить
-          </v-btn>
+          <v-row>
+            <v-spacer />
+            <v-col cols="12" md="auto" sm="12">
+              <v-btn
+                style="width: 100%;"
+                color="gray"
+                nuxt
+                to="/"
+              >
+                Посмотреть участников
+              </v-btn>
+            </v-col>
+            <v-col cols="12" md="auto" sm="12">
+              <v-btn
+                style="width: 100%;"
+                color="primary"
+                :loading="load"
+                @click="store"
+              >
+                Отправить
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -78,13 +87,19 @@ export default {
     errors: ({
       name: '',
       description: ''
-    })
+    }),
+    load: false
   }),
+
+  created () {
+    console.log(process.env)
+  },
 
   methods: {
     store () {
+      this.load = true
       axios
-        .post("/api/posts", this.form, {
+        .post("http://rucensus.loc/api/posts", this.form, {
           headers: {
             Accept: "application/json"
           }
@@ -94,8 +109,10 @@ export default {
             this.$router.push('/')
           },
         )
-        .catch(error => this.errors = error.response.data.errors)
-        ;
+        .catch(error => {
+          this.load = false
+          this.errors = error.response.data.errors
+        });
     }
   }
 }
