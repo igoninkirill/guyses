@@ -16,7 +16,7 @@
             nuxt
             to="posts/create"
           >
-            Отметить себбя
+            Отметить себя
           </v-btn>
         </v-col>
       </v-row>
