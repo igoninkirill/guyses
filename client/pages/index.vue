@@ -5,9 +5,7 @@
         <v-col cols="auto">
           <span class="heading">Участники ПЕРВОЙ ПРАВДИВОЙ ОБЩЕМИРОВОЙ переписи населения</span><br>
           Посчитанное количество людей:
-          <v-chip
-            color="Primary"
-          >{{ posts.length }}</v-chip>
+          {{ posts.length }}
         </v-col>
         <v-spacer/>
         <v-col cols="auto">
@@ -26,15 +24,10 @@
         :headers="headers"
         :items="posts"
         :footer-props="footerProps"
+        @click:row="toPost"
         class="elevation-1"
       >
         <template #item.comments="{ item }">
-          <v-btn
-            color="primary"
-            :to="'posts/' + item.id"
-          >
-            Комментарии
-          </v-btn>
           <v-chip>{{ item.comments.length }}</v-chip>
         </template>
       </v-data-table>
@@ -68,6 +61,9 @@ export default {
   },
 
   methods: {
+    toPost (item) {
+      location="/posts/" + item.id
+    },
     init () {
       axios
         .get("/api/posts", this.form, {
@@ -88,7 +84,7 @@ export default {
 <style>
 
 .v-card {
-  opacity: .98
+  opacity: .95
 }
 .v-main__wrap {
   background: linear-gradient(-45deg, #eee, #e73c7e, #23a6d5, #23d5ab);
@@ -107,4 +103,5 @@ export default {
     background-position: 0% 50%;
   }
 }
+
 </style>
