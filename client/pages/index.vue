@@ -70,7 +70,7 @@ export default {
   methods: {
     init () {
       axios
-        .get("http://rucensus.loc/api/posts", this.form, {
+        .get("/api/posts", this.form, {
           headers: {
             Accept: "application/json"
           }
