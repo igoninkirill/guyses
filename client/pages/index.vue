@@ -25,7 +25,7 @@
       <v-data-table
         :headers="headers"
         :items="posts"
-        :items-per-page="5"
+        :footer-props="footerProps"
         class="elevation-1"
       >
         <template #item.comments="{ item }">
@@ -51,11 +51,16 @@ export default {
   data: () => ({
     posts: [],
     headers: [
-      { text: 'ID', value: 'id', sortable: false },
       { text: 'Имя', value: 'name', sortable: false },
       { text: 'О себе', value: 'description', sortable: false },
       { text: 'Комментарии', value: 'comments', sortable: false }
-    ]
+    ],
+    footerProps: {
+      showFirstLastPage: true,
+      showCurrentPage: true,
+      itemsPerPageOptions: [10]
+    },
+
   }),
 
   created () {
@@ -65,7 +70,7 @@ export default {
   methods: {
     init () {
       axios
-        .get("/api/posts", this.form, {
+        .get("http://rucensus.loc/api/posts", this.form, {
           headers: {
             Accept: "application/json"
           }
