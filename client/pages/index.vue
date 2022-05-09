@@ -65,7 +65,7 @@ export default {
   methods: {
     init () {
       axios
-        .get("http://rucensus.loc/api/posts", this.form, {
+        .get("/api/posts", this.form, {
           headers: {
             Accept: "application/json"
           }
@@ -79,3 +79,27 @@ export default {
   }
 }
 </script>
+
+<style>
+
+.v-card {
+  opacity: .98
+}
+.v-main__wrap {
+  background: linear-gradient(-45deg, #eee, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+</style>

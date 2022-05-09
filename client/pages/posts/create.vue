@@ -99,7 +99,7 @@ export default {
     store () {
       this.load = true
       axios
-        .post("http://rucensus.loc/api/posts", this.form, {
+        .post("/api/posts", this.form, {
           headers: {
             Accept: "application/json"
           }

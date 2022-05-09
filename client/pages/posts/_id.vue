@@ -106,7 +106,7 @@ export default {
   methods: {
     init () {
       axios
-        .get("http://rucensus.loc/api/posts/" + this.$route.params.id, {
+        .get("/api/posts/" + this.$route.params.id, {
           headers: {
             Accept: "application/json"
           }
@@ -123,7 +123,7 @@ export default {
     store () {
       this.load = true
       axios
-        .post("http://rucensus.loc/api/comments", this.form, {
+        .post("/api/comments", this.form, {
           headers: {
             Accept: "application/json"
           }
